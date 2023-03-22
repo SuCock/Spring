@@ -14,7 +14,6 @@ import com.yedam.app.emp.service.EmpVO;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/root-context.xml")
 public class EmpMapperClient {
-	
 	@Autowired
 	EmpMapper empMapper;
 	
@@ -22,7 +21,7 @@ public class EmpMapperClient {
 	public void getEmpInfo() {
 		EmpVO vo = new EmpVO();
 		vo.setEmployee_id("100");
-		EmpVO findVO = empMapper.getEmp(vo);
+		EmpVO findVO= empMapper.getEmp(vo);
+		
 		assertEquals(findVO.getFirst_name(),"Steven");
-	}
-}
+	}}
