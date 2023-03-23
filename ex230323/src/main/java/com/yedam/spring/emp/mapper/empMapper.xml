@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.spring.emp.mapper.EmpMapper">
+	<!-- 전제조회 resultType은 리턴되는거-->
+	<select id="selectEmpAllList" resultType="EmpVO">
+		SELECT employee_id,
+			   first_name,
+			   last_name,
+			   email,
+			   phone_number,
+			   hire_date,
+			   job_id,
+			   salary,
+			   commission_pct,
+			   manager_id,
+			   department_id
+		FROM employees
+		ORDER BY employee_id
+	</select>
+	<!-- 단건조회 파라미터 타입 생략-->
+	<select id="selectEmpInfo" resultType="EmpVO">
+		SELECT employee_id,
+			   first_name,
+			   last_name,
+			   email,
+			   phone_number,
+			   hire_date,
+			   job_id,
+			   salary,
+			   commission_pct,
+			   manager_id,
+			   department_id
+		FROM employees
+		WHERE employee_id=#{ employeeId }
+		<!-- #{ } : preparedStatement 물음표에 데이터를 집어넣는 형식(들어오는 데이터에 맞춰서 타입을 지정해준다.) -->
+		<!-- 0 -> 0, Kang -> 'Kang' -->
+		<!-- ${ } : 타입을 맞춰주지 않고 그대로 보낸다. -->
+		<!-- 0 -> 0, Kang -> Kang -->
+	</select>
+	<!-- 등록 파라미터 타입(매개변수)과 결과타입을 필수적으로 요구-->
+	<!-- 최초의 값이 null일테니 nvl로 0으로 맞춘다. 그 다음 값부터는 1씩 증가. -->
+	<insert id="insertEmpInfo" parameterType="EmpVO">
+		<selectKey keyProperty="employeeId" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(employee_id),0) + 1 FROM employees
+		</selectKey>
+		INSERT INTO employees(employee_id,
+			   				  first_name,
+			   				  last_name,
+			   				  email,
+			  		  		  hire_date,
+			   			   	  job_id,
+			   				  salary)
+			   		VALUES	  (#{employeeId},
+			   				   #{firstName},
+			   				   #{lastName},
+			   				   #{email},
+			   				   sysdate,
+			   				   #{jobId},
+			   				   #{salary})
+	</insert>
+	<!-- 수정 : 급여를 정해진 비율로 인상 -->
+	<!-- 두개를 넘길때는 파라미터타입 생략 쓰면 복잡해진다. -->
+	<update id="updateEmpSal">
+		UPDATE employees
+		SET salary = salary*(1+#{raise}/100)
+		WHERE employee_id=#{empId}
+	</update>
+	<!-- 수정 : 사원 정보 수정(무엇을 수정할지는 모르겠으나 하나만 수정하고 싶을 때) -->
+	<!-- 1) 모든 항목에 업데이트 진행, 전제조건 : 모든 항목에 정보가 존재해야한다. 수정된 정보와 수정되지 않은 정보가 함께 업데이트 -->
+	<!-- 2) Mybatis -> Dynamic SQL을 이용해서 들어오는 항목만 업데이트 -->
+	<update id="updateEmpInfo" parameterType="EmpVO">
+		UPDATE employees
+		<set>
+			<if test="firstName != null and !firstName.equals('')">
+				first_name = #{firstName},
+			</if>
+			<if test="email != null and !email.equals('')">
+				email = #{email},
+			</if>
+			<if test="salary > 0 ">
+				salary = #{salary},
+			</if>
+		</set>
+		WHERE employee_id = #{employeeId}
+	</update>
+	<!-- 삭제 -->
+	<delete id="deleteEmpInfo" parameterType="int">
+		DELETE FROM employees
+		WHERE employee_id = #{employeeId}
+	</delete>
+</mapper> 
+ 
