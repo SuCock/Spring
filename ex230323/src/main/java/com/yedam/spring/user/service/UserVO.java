@@ -12,6 +12,6 @@ public class UserVO {
 	private Integer age;
 	// util.Date는 기본포멧이  / 다.
 	// 스프링에서 지원하는 날짜포멧
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date today;
 }
