@@ -8,11 +8,11 @@ import java.util.Set;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yedam.spring.user.service.UserListVO;
@@ -86,6 +86,12 @@ public class UserRestController {
 	@RequestMapping("/getInfo")
 		public UserVO getInfo(@RequestBody UserVO userVO) {
 			return userVO;
+	}
+	@PostMapping("/upload")
+	public String uploadFile(UserVO userVO) {
+		System.out.println("name: "+userVO.getName());
+		System.out.println("filr: "+userVO.getPic().getOriginalFilename());
+		return "업로드를 완료했습니다.";
 	}
 }	
 
