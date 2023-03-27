@@ -32,7 +32,22 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-				
+		
+		<!-- 타일즈 코어 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-core -->
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-core</artifactId>
+		    <version>3.0.8</version>
+		</dependency>
+		<!-- 커스텀마이징 가능한 타일즈 엑스트라즈 -->			
+		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-extras -->
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-extras</artifactId>
+		    <version>3.0.8</version>
+		</dependency>
+					
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
