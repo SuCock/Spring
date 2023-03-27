@@ -2,45 +2,62 @@ package com.yedam.spring.board.service.Impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.yedam.spring.board.mapper.BoardMapper;
 import com.yedam.spring.board.service.BoardService;
 import com.yedam.spring.board.service.BoardVO;
 
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 
-	@Override
-	public List<BoardVO> getBoardList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public BoardVO getBoardInfo(BoardVO boardVO) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Autowired
+    BoardMapper boardMapper;
 
-	@Override
-	public BoardVO getBoardNo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<BoardVO> getBoardList() {
 
-	@Override
-	public int insertBoardInfo(BoardVO boardVO) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+        return boardMapper.selectBoardList();
+    }
 
-	@Override
-	public int updateBoardInfo(BoardVO boardVO) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public BoardVO getBoardInfo(BoardVO boardVO) {
+        return boardMapper.selectBoardInfo(boardVO);
+    }
 
-	@Override
-	public int deleteBoardInfo(int boardNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public BoardVO getBoardNo() {
+        return boardMapper.getBoardNO();
+    }
+
+    @Override
+    public int insertBoardInfo(BoardVO boardVO) {
+        int result = boardMapper.insertBoard(boardVO);
+        if(result == 1) {
+            return boardVO.getBno();
+        }else { 
+            return -1;
+        }
+    }
+
+    @Override
+    public int updateBoardInfo(BoardVO boardVO) {
+        int result = boardMapper.updateBoard(boardVO);
+        if(result == 1) {
+            return boardVO.getBno();
+        }else { 
+            return -1;
+        }
+    }
+
+    @Override
+    public int deleteBoardInfo(int boardNo) {
+        int result = boardMapper.deleteBoard(boardNo);
+        if(result == 1) {
+            return boardNo;
+        }else { 
+            return -1;
+        }
+    }
 
 }
