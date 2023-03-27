@@ -20,7 +20,7 @@ import com.yedam.spring.user.service.UserVO;
 
 //간단한 에러를 해결해줌
 @CrossOrigin
-//데이터를 반환하는 컨트롤러
+//데이터를 반환하는 컨트롤러 기존의 컨트롤러@Contoroller + @ResponseBody 같이 의미 => 해당 클래스 내의 모든 컨트롤러는 객체를 반환.
 @RestController
 public class UserRestController {
 	
@@ -93,6 +93,7 @@ public class UserRestController {
 		System.out.println("filr: "+userVO.getPic().getOriginalFilename());
 		return "업로드를 완료했습니다.";
 	}
+	
 }	
 
 
