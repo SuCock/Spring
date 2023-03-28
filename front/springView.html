@@ -10,7 +10,7 @@
   <div>
     <form action ="http://localhost:8081/spring/upload" method="post" enctype="multipart/form-data">
       <input name="name" value="hong" placeholder="이름">
-      <input name= "pic" type="file">
+      <input name= "pic" type="file" multiple>
       <button type="submit">전송</button>
     </form>
   </div>
@@ -27,11 +27,7 @@
       })
     }
     )
-<<<<<<< HEAD
-    .then(Response => Response.json())
-=======
     .then(response => response.json())
->>>>>>> branch 'master' of https://github.com/SuCock/Spring.git
     .then(data => console.log(data))
     .catch(reject => console.log(reject))
   </script>
