@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -36,6 +37,7 @@ public class EmpController {
 	//단건조회
 	@GetMapping("/empInfo")
 	// 모델도 필요하디만 데이터를 받을 클래스도 필요
+	// empVO안에 있는 필드명이 key, key의 각 타입에 맞춰서 포맷(value)으로 보내야한다.
 	public String getEmpInfo(EmpVO empVO, Model model) {
 		model.addAttribute("empInfo", empService.getEmp(empVO));
 		return "emp/empInfo";
@@ -67,10 +69,25 @@ public class EmpController {
 	// 수정 - Process(json 비동기식) 
 	//1) Client - JSON -> Server
 	//2) Server- JSON -> Client (Map은 텍스트로 못 넘긴다. 처리 못함.)
-	@PostMapping("/empUpadate")
+	@PostMapping("/empUpdate")
 	@ResponseBody
 	public Map<String, String> empUpdateProcess(@RequestBody EmpVO empVO) {
 		return empService.updateEmp(empVO);
 		
 	}
+	// 삭제
+	// 2~3개의 다량의 데이터가 들어온다->커맨드객체
+	@PostMapping("/empDelete")
+	// 비동기(페이지 이동 없음)
+	@ResponseBody										
+	//변수명 = 키값(script-function)
+	public String empDeleteProcess(@RequestParam int employeeId) {
+		Map<String, String> map = empService.deleteEmp(employeeId);	
+		return map.get("결과");
+	}
 }
+	
+	
+	
+	
+	
