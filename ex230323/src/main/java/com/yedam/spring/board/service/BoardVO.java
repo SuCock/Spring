@@ -10,7 +10,7 @@ import lombok.Data;
 public class BoardVO {
 	private int bno;
 	private String title;
-	private String contents;
+	private String contnets;
 	private String writer;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date regdate;

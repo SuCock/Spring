@@ -7,7 +7,7 @@
   	<select id="selectBoardList" resultType="BoardVO">
   		SELECT bno,
   			   title,
-  			   contents,
+  			   contnets,
   			   writer,
   			   regdate,
   			   updatedate,
@@ -19,7 +19,7 @@
   	<select id="selectBoardInfo" resultType="BoardVO">
   		SELECT bno,
   			   title,
-  			   contents,
+  			   contnets,
   			   writer,
   			   regdate,
   			   updatedate,
@@ -39,7 +39,7 @@
   		ORDER BY bno
   	</select>
   	<!-- 입력될 게시글 번호 조회 -->
-  	<select id="getBoardNO" resultType="EmpVO">
+  	<select id="getBoardNO" resultType="BoardVO">
   	<!-- 별칭에 결과값을 넣어야 함으로 필수다. -->
   			SELECT NVL(MAX(bno),0) +1 AS bno FROM board
   	</select>
@@ -47,24 +47,24 @@
   	<insert id="insertBoard" parameterType="BoardVO">		
   		INSERT INTO board(bno,
   						  title,
-  						  contents,
+  						  contnets,
   						  writer
   						 <if test="regdate != null">
   						  ,regdate
   						 </if>
-  						 <if test="image != null and !iamge.equals('')">
+  						 <if test="image != null and !image.equals('')">
   						  ,image
   						  </if>
   						  )
   				VALUES	 (#{bno},
   						  #{title},
-  						  #{contents},
+  						  #{contnets},
   						  #{writer}
   						  <if test="regdate != null">
   						  ,#{regdate}
   						  </if>
   						  <!-- ,까지 같이 감싸줘야 한다. -->
-  						 <if test="image != null and !iamge.equals('')">
+  						 <if test="image != null and !image.equals('')">
   						  ,#{image}
   						  </if>
   						  )  						 
@@ -76,8 +76,8 @@
   			<if test="title != null and !title.equals('')">
   				title = #{title},
   			</if>
-  			<if test="contents != null and !contents.equals('')">
-  				contents = #{contents},
+  			<if test="contnets != null and !contnets.equals('')">
+  				contnets = #{contnets},
   			</if>
   			<if test="image != null and !image.equals('')">
   				image = #{image},

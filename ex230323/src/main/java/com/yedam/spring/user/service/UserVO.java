@@ -16,5 +16,5 @@ public class UserVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date today;
 	
-	private MultipartFile pic;
+	private MultipartFile[] pic;
 }
