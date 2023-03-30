@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace = "com.yedam.java.emp.mapper.BookMapper">
+ 	<!-- 입력될 도서번호 조회 -->
+ 	<select id="getBookNo" resultType="BookVO">
+ 		SELECT NVL(MAX(BOOK_NO),0)+1 AS BOOK_NO
+ 		FROM BOOK_TBL_06
+ 	</select>
+ 	<!-- 도서등록 -->
+ 	<insert id="insertBook" parameterType="BookVO">
+ 	INSERT INTO BOOK_TBL_06 (BOOK_NO,
+ 							 BOOK_NAME
+ 							<if test="bookCoverimg != null and !bookCoverimg.equals('')">
+ 							 ,BOOK_COVERIMG
+ 							</if>
+ 							<if test="bookDate != null and !bookDate.equals('')">
+ 							 ,BOOK_DATE
+ 							</if>
+ 							<if test="bookPrice != null and !bookPrice.equals('')">
+ 							 ,BOOK_PRICE
+ 							</if>
+ 							<if test="bookPublisher != null and !bookPublisher.equals('')">
+ 							 ,BOOK_PUBLISHER
+ 							</if>
+ 							<if test="bookInfo != null and !bookInfo.equals('')">
+ 							 ,BOOK_INFO
+ 							</if>
+ 							 )
+ 		  VALUES     		(
+ 		  					 #{bookNo},
+ 		  					 #{bookName}
+ 		  					<if test="bookCoverimg != null and !bookCoverimg.equals('')">
+ 		  					 ,#{bookCoverimg}
+ 		  					</if>
+ 		  					<if test="bookDate != null and !bookDate.equals('')">
+ 		  					 ,#{bookDate}
+ 		  					</if>
+ 		  					<if test="bookPrice != null and !bookPrice.equals('')">
+ 		  					 ,#{bookPrice}
+ 		  					</if>
+ 		  					<if test="bookPublisher != null and !bookPublisher.equals('')">
+ 		  					 ,#{bookPublisher}
+ 		  					</if>
+ 		  					<if test="bookInfo != null and !bookInfo.equals('')">
+ 		  					 ,#{bookInfo} 
+ 		  					</if> 					 
+ 		  					 )
+ 	</insert>
+ 	<!-- 도서목록 -->
+ 	<select id="selectBookList" resultType="BookVO">
+ 	SELECT *
+ 	FROM BOOK_TBL_06
+ 	ORDER BY BOOK_NO
+ 	</select>
+ 	<!-- 대여목록 -->
+ 	<select id="selectRentList" resultType="RentVO">
+ 	SELECT b.BOOK_NO,
+       	   b.BOOK_NAME,
+       	   SUM(r.RENT_PRICE) AS RENT_PRICE,
+           COUNT(r.RENT_STATUS) AS RENT_STATUS
+ 	FROM RENT_TBL_06 r, BOOK_TBL_06 b
+ 	WHERE r.BOOK_NO = b.BOOK_NO
+    GROUP BY b.BOOK_NO, b.BOOK_NAME, r.RENT_PRICE, r.RENT_STATUS
+ 	ORDER BY b.BOOK_NO
+ 	</select>
+ </mapper>

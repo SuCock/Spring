@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script th:inline="javascript">
+	funciton getCtx(){
+		return /*[[${#httpServletRequest.getContextPath()}]]*/'';
+	}
+</script>
+</head>
+<body>
+	<button type="button" th:onclick="|location.href='@{/empInsert}'|">등록</button>
+	<table>
+		<thead>
+	        <tr>
+	            <th>employee_id</th>
+	            <th>first_name</th>
+	            <th>job_id</th>
+	            <th>hire_date</th>
+	        </tr>
+        </thead>
+        <tbody>
+	        <tr th:each="emp,index : ${empList}" th:onclick="|location.href='@{/empInfo(employeeId=${emp.employeeId})}'|">
+	            <td th:text="${emp.employeeId}"/>
+	            <td th:text="${emp.firstName}"/>
+	            <td th:text="${emp.jobId}"/>
+	            <td th:text="${#dates.format(emp.hireDate, 'yyyy년MM월dd일')}"/>
+	        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
